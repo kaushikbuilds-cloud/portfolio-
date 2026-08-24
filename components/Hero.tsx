@@ -81,6 +81,9 @@ export default function Hero() {
                 className="sticker-text font-display mt-1 text-[15vw] leading-[0.85] tracking-tight text-paper sm:text-[9vw] lg:text-8xl"
               >
                 KAUSHIK&nbsp;S
+                <span className="sr-only">
+                  {" "}— Full-Stack App &amp; Web Developer
+                </span>
               </motion.h1>
 
               <motion.div initial="hidden" animate="show" custom={2} variants={fadeUp}>

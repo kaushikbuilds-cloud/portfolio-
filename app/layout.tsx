@@ -22,29 +22,103 @@ const workSans = Work_Sans({
 });
 
 const siteUrl = "https://kaushik.codes";
+const title = "Kaushik S — Full-Stack Web & App Developer";
+const description =
+  "Kaushik S is a full-stack web and app developer building fast Next.js websites, React Native mobile apps, and GenAI-powered products. Available for freelance and full-time work.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Kaushik S — Full Stack App & Web Developer",
-  description:
-    "Portfolio of Kaushik S — Computer Engineering student at Karunya Institute, building GenAI-powered products, mobile apps, and client websites across two studios.",
+  title: {
+    default: title,
+    template: "%s — Kaushik S",
+  },
+  description,
+  applicationName: "Kaushik S — Portfolio",
+  keywords: [
+    "web developer",
+    "app developer",
+    "full stack developer",
+    "full stack web developer",
+    "mobile app developer",
+    "React Native developer",
+    "Next.js developer",
+    "freelance web developer",
+    "freelance app developer",
+    "Kaushik S",
+    "Kaushik developer",
+    "Karunya Institute of Technology",
+  ],
+  authors: [{ name: "Kaushik S", url: siteUrl }],
+  creator: "Kaushik S",
+  publisher: "Kaushik S",
+  category: "technology",
+  alternates: {
+    canonical: siteUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Kaushik S — Full Stack App & Web Developer",
-    description:
-      "Projects, skills, and services from a founder shipping full-stack products, voice AI assistants, and design-led web builds.",
+    title,
+    description,
     url: siteUrl,
     siteName: "Kaushik S",
     type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/kaushik.png",
+        width: 800,
+        height: 800,
+        alt: "Kaushik S — Full-Stack Web & App Developer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kaushik S — Full Stack App & Web Developer",
-    description:
-      "Computer Engineering student and founder shipping full-stack products and GenAI tools.",
+    title,
+    description,
+    images: ["/kaushik.png"],
   },
   icons: {
     icon: "/favicon.svg",
   },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Kaushik S",
+  url: siteUrl,
+  image: `${siteUrl}/kaushik.png`,
+  jobTitle: "Full-Stack Web & App Developer",
+  description,
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Karunya Institute of Technology and Sciences",
+  },
+  knowsAbout: [
+    "Web Development",
+    "App Development",
+    "Full-Stack Development",
+    "React",
+    "Next.js",
+    "React Native",
+    "GenAI Integration",
+  ],
+  sameAs: [
+    "https://github.com/kaushikbuilds-cloud",
+    "https://linkedin.com/in/kaushik-s-0012a93b7",
+    "https://x.com/kaushik_code",
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -55,6 +129,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${archivoBlack.variable} ${jetbrainsMono.variable} ${workSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink overflow-x-hidden">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <CustomCursor />
         <ScrollProgress />
         {children}
