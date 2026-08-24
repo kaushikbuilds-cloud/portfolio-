@@ -1,26 +1,300 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark terminal/IDE theme — same semantic tokens as before, new values.
+     --paper is the base surface (near-black), --ink is foreground text
+     (near-white). Accents read like a syntax-highlighted editor: green
+     for primary actions, blue for secondary emphasis, amber for tags. */
+  --paper: #0a0e14;
+  --paper-2: #131a23;
+  --ink: #e6edf3;
+  --ink-soft: #8b98a5;
+  --coral: #3fb950;
+  --teal: #58a6ff;
+  --sun: #d29922;
+  --tape: #1c2531;
+  --line: #e6edf3;
+
+  --font-display: var(--font-archivo-black);
+  --font-marker: var(--font-jetbrains-mono);
+  --font-body: var(--font-work-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-coral: var(--coral);
+  --color-teal: var(--teal);
+  --color-sun: var(--sun);
+  --color-tape: var(--tape);
+  --font-display: var(--font-display);
+  --font-marker: var(--font-marker);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor,
+  html.custom-cursor a,
+  html.custom-cursor button,
+  html.custom-cursor input,
+  html.custom-cursor textarea {
+    cursor: none !important;
+  }
+}
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  position: relative;
+}
+
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+}
+.font-marker {
+  font-family: var(--font-marker), ui-monospace, monospace;
+  letter-spacing: -0.01em;
+}
+
+/* --- Line-art / sketchbook primitives ---
+   Pure black-on-white, hard offset shadows instead of soft blur, thick
+   consistent strokes. No paper texture, no torn edges, no warm tones.
+
+   Wrapped in @layer components so that when a Tailwind utility like
+   `absolute` is combined on the same element, the utility always wins
+   (Tailwind v4's utilities layer otherwise loses to unlayered CSS
+   regardless of source order, which silently broke `paper-cut absolute`
+   combinations sitewide). */
+
+@layer components {
+
+/* Base bordered card: thick black outline + a hard offset "sticker" shadow
+   instead of a blurred box-shadow — this is what gives the whole system its
+   flat, high-contrast comic-panel feel. */
+.paper-card,
+.paper-cut {
+  background: var(--paper);
+  position: relative;
+  border: 2.5px solid var(--ink);
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+
+/* Torn-* class names are kept as no-ops so existing markup doesn't need to
+   change, but the aesthetic no longer uses jagged clip-path edges. */
+.torn-1,
+.torn-2,
+.torn-3,
+.torn-all,
+.torn-top,
+.torn-bottom,
+.torn-band-top,
+.torn-band-bottom {
+  clip-path: none;
+}
+
+/* Layered card stack: two thin black-outlined sheets peeking out behind the
+   main card, offset and rotated — reads as a little stack of pinned index
+   cards rather than a single flat rectangle. */
+.paper-stack {
+  position: relative;
+}
+.paper-stack::before,
+.paper-stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  border-radius: 1rem;
+}
+.paper-stack::before {
+  transform: rotate(-3deg) translate(-2%, 2%);
+}
+.paper-stack::after {
+  transform: rotate(2.5deg) translate(2%, -1.5%);
+}
+
+/* Washi tape strip — thin black-outlined translucent strip */
+.tape {
+  background: var(--tape);
+  border: 1.5px solid var(--ink);
+  opacity: 0.95;
+}
+
+/* Sticky note fold corner */
+.sticky-note {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12% 100%, 0 88%);
+}
+
+/* Dashed underline doodle */
+.doodle-underline {
+  background-image: linear-gradient(to right, var(--ink) 0%, var(--ink) 100%);
+  background-position: 0 92%;
+  background-repeat: no-repeat;
+  background-size: 100% 4px;
+}
+
+/* Hero portrait cutout — flat drop-shadow only, no blob mask */
+.photo-blob {
+  position: relative;
+}
+.photo-blob-frame {
+  background: var(--paper);
+  position: relative;
+}
+
+.pushpin {
+  background: radial-gradient(circle at 32% 28%, #6a6a6a, var(--coral) 65%);
+  box-shadow:
+    0 2px 3px rgba(17, 17, 17, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+    inset 0 2px 2px rgba(255, 255, 255, 0.4);
+}
+
+/* --- Sticker text: thick outline + offset hard shadow, like a die-cut
+   vinyl sticker letter. */
+.sticker-text {
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 5px 0 var(--ink);
+}
+@media (min-width: 640px) {
+  .sticker-text {
+    -webkit-text-stroke-width: 4px;
+    text-shadow: 7px 7px 0 var(--ink);
+  }
+}
+@media (min-width: 1024px) {
+  .sticker-text {
+    -webkit-text-stroke-width: 5px;
+    text-shadow: 9px 9px 0 var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Smaller outline for sub-headings / badges, no offset shadow */
+.sticker-outline {
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+}
+
+/* Highlighter marker swash behind emphasized text */
+.highlight-mark {
+  background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--coral) 35%, transparent) 55%);
+  padding: 0 0.15em;
+}
+
+/* Lanyard ribbon dropping from off-screen to an ID badge */
+.lanyard {
+  background: var(--paper);
+  border-left: 2.5px solid var(--ink);
+  border-right: 2.5px solid var(--ink);
+}
+
+/* --- Browser-window chrome: the signature "content framed like a browser
+   tab" motif — a rounded black-outlined box with a top bar carrying three
+   traffic-light dots. */
+.window-frame {
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  border-radius: 1.1rem;
+  box-shadow: 7px 7px 0 0 var(--ink);
+  overflow: hidden;
+  position: relative;
+}
+
+.window-topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 2.5px solid var(--ink);
+}
+
+.window-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+
+/* Dot-grid backdrop, sat behind headline content via a positioned sibling */
+.dot-grid {
+  background-image: radial-gradient(color-mix(in srgb, var(--ink) 35%, transparent) 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+}
+
+/* Speech-bubble tag label with a small triangular tail */
+.bubble-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 2.25px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+}
+.bubble-tag::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: -8px;
+  width: 12px;
+  height: 12px;
+  background: var(--paper);
+  border-left: 2.25px solid var(--ink);
+  border-bottom: 2.25px solid var(--ink);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+} /* end @layer components */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 26s linear infinite;
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.animate-marquee-reverse {
+  animation: marquee-reverse 26s linear infinite;
+}
+.skill-lane:hover .animate-marquee,
+.skill-lane:hover .animate-marquee-reverse {
+  animation-play-state: paused;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
 }
