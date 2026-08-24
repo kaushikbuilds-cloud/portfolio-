@@ -22,9 +22,9 @@ const workSans = Work_Sans({
 });
 
 const siteUrl = "https://kaushik.codes";
-const title = "Kaushik S — Full-Stack Web & App Developer";
+const title = "Kaushik S — Web & App Developer in Coimbatore";
 const description =
-  "Kaushik S is a full-stack web and app developer building fast Next.js websites, React Native mobile apps, and GenAI-powered products. Available for freelance and full-time work.";
+  "Kaushik S is a full-stack web and app developer based in Coimbatore, Tamil Nadu, building fast Next.js websites, React Native mobile apps, and GenAI-powered products for clients across India. Available for freelance and full-time work.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -37,15 +37,20 @@ export const metadata: Metadata = {
   keywords: [
     "web developer",
     "app developer",
+    "web developer in Coimbatore",
+    "app developer in Coimbatore",
+    "freelance web developer Coimbatore",
+    "freelance app developer Tamil Nadu",
+    "web developer India",
+    "app developer India",
     "full stack developer",
     "full stack web developer",
     "mobile app developer",
     "React Native developer",
     "Next.js developer",
-    "freelance web developer",
-    "freelance app developer",
     "Kaushik S",
-    "Kaushik developer",
+    "Kaushik S developer",
+    "Kaushik S Karunya",
     "Karunya Institute of Technology",
   ],
   authors: [{ name: "Kaushik S", url: siteUrl }],
@@ -54,6 +59,12 @@ export const metadata: Metadata = {
   category: "technology",
   alternates: {
     canonical: siteUrl,
+  },
+  other: {
+    "geo.region": "IN-TN",
+    "geo.placename": "Coimbatore",
+    "geo.position": "11.0168;76.9558",
+    ICBM: "11.0168, 76.9558",
   },
   robots: {
     index: true,
@@ -99,11 +110,31 @@ const personJsonLd = {
   name: "Kaushik S",
   url: siteUrl,
   image: `${siteUrl}/kaushik.png`,
-  jobTitle: "Full-Stack Web & App Developer",
+  jobTitle: "Web & App Developer",
   description,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Coimbatore",
+    addressRegion: "Tamil Nadu",
+    addressCountry: "IN",
+  },
+  homeLocation: {
+    "@type": "Place",
+    name: "Coimbatore, Tamil Nadu, India",
+  },
+  workLocation: {
+    "@type": "Place",
+    name: "Coimbatore, Tamil Nadu, India",
+  },
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "Karunya Institute of Technology and Sciences",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Coimbatore",
+      addressRegion: "Tamil Nadu",
+      addressCountry: "IN",
+    },
   },
   knowsAbout: [
     "Web Development",

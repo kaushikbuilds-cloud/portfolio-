@@ -93,7 +93,9 @@ export default function About() {
             <Tape className="-right-3 -bottom-3" rotate={6} color="coral" />
 
             <p className="text-base leading-relaxed text-ink-soft sm:text-lg">
-              I&apos;m a Computer Engineering student at{" "}
+              I&apos;m Kaushik S, a full-stack web and app developer based
+              in <span className="font-semibold text-ink">Coimbatore, Tamil Nadu</span>,
+              and a Computer Engineering student at{" "}
               <span className="font-semibold text-ink">
                 Karunya Institute of Technology &amp; Sciences
               </span>{" "}
@@ -104,8 +106,9 @@ export default function About() {
               see the Projects section below for details.
             </p>
             <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
-              Currently: shipping freelance builds and looking for full-stack
-              / product design opportunities.
+              Currently: taking on freelance web and app development work
+              in Coimbatore and remotely across India, and looking for
+              full-stack / product design opportunities.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
